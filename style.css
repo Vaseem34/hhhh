@@ -1,0 +1,192 @@
+/* Custom variables for the color palette */
+:root {
+    --bg-gradient: linear-gradient(135deg, #fceaf0 0%, #f9d1d1 100%);
+    --accent-color: #ff4d6d;
+    --text-main: #4a4a4a;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background: var(--bg-gradient);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden; /* Prevents horizontal scrolling when elements float off-screen */
+}
+
+/* The Glassmorphism Container */
+.container {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px); /* Safari support for glass effect */
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    z-index: 10;
+}
+
+h1 {
+    color: var(--accent-color);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+p {
+    color: var(--text-main);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* The Love Meter Display */
+.love-meter {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    margin: 20px 0;
+    border: 2px dashed var(--accent-color);
+}
+
+.counter-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+/* --- New: Memory Section Styling --- */
+.memory-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 77, 109, 0.2);
+}
+
+.memory-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    position: relative;
+    height: auto;
+}
+
+/* Photo Gallery Grid */
+.photo-gallery {
+    display: none; /* Initially hidden */
+    grid-template-columns: repeat(2, 1fr); /* 2x2 grid */
+    gap: 15px;
+    margin-top: 25px;
+    width: 100%;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05); /* Small lift on hover */
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures images fill their container correctly */
+    display: block;
+}
+
+
+/* Funny Quiz Section Formatting */
+.quiz-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 77, 109, 0.2);
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    position: relative;
+    height: 60px; /* Gives the tricky button a container to move around in initially */
+}
+
+button {
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s ease;
+}
+
+/* Standard Buttons */
+.btn-yes, .btn-no {
+    z-index: 2;
+}
+
+/* Memory Section Standardized Buttons */
+.memory-yes, .memory-no {
+    position: static;
+}
+
+/* The "Yes" Button (pulsing) */
+.btn-yes {
+    background-color: var(--accent-color);
+    color: white;
+    box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+    animation: pulse 2s infinite;
+}
+
+.btn-yes:hover {
+    transform: scale(1.1);
+}
+
+/* The Tricky "No" Button (For Forgiveness) */
+#noBtn {
+    background-color: #8d99ae;
+    color: white;
+    position: absolute; /* Allows JavaScript to move it freely */
+}
+
+/* Floating Celebration Items */
+.floating-item {
+    position: fixed;
+    pointer-events: none; /* Ensures she can still click buttons underneath the floating items */
+    z-index: 1;
+    animation: floatUp linear forwards;
+    background-size: cover; /* For the photo-fragment items */
+}
+
+/* Keyframe Animations */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes floatUp {
+    from { 
+        transform: translateY(100vh) rotate(0deg); 
+        opacity: 1; 
+    }
+    to { 
+        transform: translateY(-10vh) rotate(360deg); 
+        opacity: 0; 
+    }
+}
+
+@keyframes refinedGlow {
+    0% { box-shadow: 0 0 5px rgba(255, 77, 109, 0.1); }
+    50% { box-shadow: 0 0 25px rgba(255, 77, 109, 0.3); }
+    100% { box-shadow: 0 0 5px rgba(255, 77, 109, 0.1); }
+}
