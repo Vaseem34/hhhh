@@ -3,218 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Favorite Person</title>
+    <title>For My Pellam</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fredoka:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #fceaf0 0%, #f9d1d1 100%);
-            --accent-color: #ff4d6d;
-            --text-main: #4a4a4a;
+            --bg-deep-red: #d90429;
+            --bg-soft-red: #ef233c;
+            --text-light: #ffffff;
+            --gold: #ffd700;
         }
 
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            background: var(--bg-gradient);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-deep-red), var(--bg-soft-red), #ff4d6d);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
+            font-family: 'Fredoka', sans-serif;
+            color: var(--text-light);
             overflow-x: hidden;
         }
 
-        /* The Glass Container */
-        .container {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(15px);
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-            margin-top: 50px;
-            margin-bottom: 50px;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Utility Classes */
+        .hidden { display: none !important; }
+        .screen {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 1s ease-in-out;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
             z-index: 10;
         }
 
-        h1 {
-            color: var(--accent-color);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        p {
-            color: var(--text-main);
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        /* The Love Meter Effect */
-        .love-meter {
-            background: white;
-            padding: 15px;
-            border-radius: 15px;
-            margin: 20px 0;
-            border: 2px dashed var(--accent-color);
-        }
-
-        .counter-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-
-        /* Funny Quiz Section */
-        .quiz-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 77, 109, 0.2);
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-            position: relative;
-            height: 60px;
-        }
-
-        button {
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            transition: 0.2s ease;
-        }
-
-        .btn-yes {
-            background-color: var(--accent-color);
-            color: white;
-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
-            animation: pulse 2s infinite;
-        }
-
-        .btn-yes:hover {
-            transform: scale(1.1);
-        }
-
-        .btn-no {
-            background-color: #8d99ae;
-            color: white;
-            position: absolute;
-        }
-
-        /* Floating Items */
-        .floating-item {
+        /* --- BACKGROUND PARTICLES --- */
+        .particle {
             position: fixed;
+            bottom: -50px;
             pointer-events: none;
             z-index: 1;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));
             animation: floatUp linear forwards;
         }
 
-        @keyframes pulse {
+        @keyframes floatUp {
+            from { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            to { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- SCREEN 1: LOGIN --- */
+        .login-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .login-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.5rem;
+            margin: 0 0 20px 0;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            animation: pulseText 2s infinite;
+        }
+
+        @keyframes pulseText {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
 
-        @keyframes floatUp {
-            from { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        .keypad-section { text-align: center; }
+        .pin-display {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .pin-dot {
+            width: 25px;
+            height: 25px;
+            border: 2px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255,255,255,0.3);
+            transition: all 0.3s;
+        }
+        .pin-dot.filled {
+            background-color: white;
+            transform: scale(1.2);
+            box-shadow: 0 0 15px white;
+        }
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .key-btn {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.5);
+            color: white;
+            font-size: 1.8rem;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Fredoka', sans-serif;
+        }
+        .key-btn:hover, .key-btn:active {
+            background: white;
+            color: var(--bg-deep-red);
+            transform: scale(1.1);
+        }
+
+        /* --- SCREEN 2: MAIN MENU --- */
+        .menu-grid {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .menu-item {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            padding: 30px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 200px;
+        }
+        .menu-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.25);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .menu-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+        .menu-item h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        /* --- SUB-SCREENS --- */
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid white;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            background: white;
+            color: var(--bg-deep-red);
+        }
+
+        .romantic-card {
+            background: rgba(255, 255, 255, 0.95);
+            color: #590d22;
+            padding: 50px;
+            max-width: 650px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            text-align: center;
+            position: relative;
+        }
+
+        .pellam-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 5rem;
+            color: var(--bg-deep-red);
+            margin: 0;
+            line-height: 1;
+        }
+        .pellam-subtitle {
+            font-family: 'Fredoka', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #ff8fa3;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        .letter-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.1rem;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .highlight-gold {
+            color: #d4af37;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <div class="container" id="mainCard">
-        <h1>I'm So Sorry!</h1>
-        <p>I know I messed up, but before you get too mad, I need to show you some data.</p>
-        
-        <div class="love-meter">
-            <p style="margin:0; font-size: 0.9rem;">My Love & Obsession for You Daily Tracker:</p>
-            <div class="counter-text" id="loveCounter">100%</div>
-            <p style="margin:5px 0 0 0; font-size: 0.8rem; color: gray;">Warning: Levels reaching critical mass.</p>
-        </div>
+    <div id="screen-login" class="screen">
+        <div class="login-container">
+            <div style="text-align: center;">
+                <h1 class="login-title">For You<br>Only</h1>
+                <p style="font-size: 1.2rem; opacity: 0.9;">Please unlock my heart...</p>
+            </div>
 
-        <p>Day by day, I find myself thinking about you more, smiling at my phone more, and getting entirely obsessed with how beautiful you are—inside and out.</p>
-
-        <div class="quiz-section">
-            <h3>So... do you forgive this idiot?</h3>
-            <div class="buttons">
-                <button class="btn-yes" onclick="celebrate()">YES, I forgive you ❤️</button>
-                <button class="btn-no" id="noBtn">NO, let him suffer</button>
+            <div class="keypad-section">
+                <div class="pin-display" id="pinDisplay">
+                    <div class="pin-dot"></div>
+                    <div class="pin-dot"></div>
+                    <div class="pin-dot"></div>
+                    <div class="pin-dot"></div>
+                </div>
+                <div class="keypad">
+                    <button class="key-btn" onclick="pressKey(1)">1</button>
+                    <button class="key-btn" onclick="pressKey(2)">2</button>
+                    <button class="key-btn" onclick="pressKey(3)">3</button>
+                    <button class="key-btn" onclick="pressKey(4)">4</button>
+                    <button class="key-btn" onclick="pressKey(5)">5</button>
+                    <button class="key-btn" onclick="pressKey(6)">6</button>
+                    <button class="key-btn" onclick="pressKey(7)">7</button>
+                    <button class="key-btn" onclick="pressKey(8)">8</button>
+                    <button class="key-btn" onclick="pressKey(9)">9</button>
+                    <button class="key-btn" style="grid-column: 2;" onclick="pressKey(0)">0</button>
+                </div>
+                <p style="margin-top: 25px; font-size: 1rem; opacity: 0.8; letter-spacing: 1px;">Hint: the day we met on insta</p>
             </div>
         </div>
     </div>
 
+
+    <div id="screen-menu" class="screen hidden">
+        <h1 style="font-family: 'Great Vibes', cursive; font-size: 4rem; margin-bottom: 10px;">My Heart Belongs to You</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 40px; letter-spacing: 2px; text-transform: uppercase;">Choose a message</p>
+        
+        <div class="menu-grid">
+            <div class="menu-item" onclick="showScreen('screen-letter')">
+                <div class="menu-icon">💌</div>
+                <h2>My Apology</h2>
+            </div>
+            <div class="menu-item" onclick="showScreen('screen-pellam')">
+                <div class="menu-icon">👑</div>
+                <h2>My Pellam</h2>
+            </div>
+            <div class="menu-item" onclick="showScreen('screen-obsession')">
+                <div class="menu-icon">💖</div>
+                <h2>My Promise</h2>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="screen-letter" class="screen hidden">
+        <button class="back-btn" onclick="showScreen('screen-menu')">← Go Back</button>
+        <div class="romantic-card">
+            <h2 style="font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--bg-deep-red); margin-top: 0;">My Sweet Bangaram,</h2>
+            <p class="letter-text">I am so, so sorry.</p>
+            <p class="letter-text">I know I messed up today, especially for not saying "I love you" first. That should always be the very first thing you hear from me, because it's the truest thing in my heart.</p>
+            <p class="letter-text">You are my entire world, the beat of my heart, and the reason I smile every single day. I can't stand the thought of you being upset with me.</p>
+            <p class="letter-text" style="margin-top: 30px; font-weight: bold; color: var(--bg-soft-red);">Please forgive this idiot who loves you endlessly.</p>
+        </div>
+    </div>
+
+
+    <div id="screen-pellam" class="screen hidden">
+        <button class="back-btn" onclick="showScreen('screen-menu')">← Go Back</button>
+        <div class="romantic-card" style="background: #fff0f3; border: 2px solid #ffb3c6;">
+            <span class="pellam-subtitle">To the queen of my heart</span>
+            <h1 class="pellam-title">My Pellam</h1>
+            <div style="font-size: 3rem; margin: 20px 0;">🌸 👑 🌸</div>
+            <p class="letter-text" style="font-size: 2.2rem;">You are not just my love,<br>you are my <span class="highlight-gold">Bangaram</span>, my everything.</p>
+            <p style="font-family: 'Fredoka', sans-serif; font-size: 1.15rem; color: #555; line-height: 1.6; margin-top: 20px;">
+                Hearing your name, calling you mine... it is the greatest privilege of my life. 
+                I want to spend every single day making you smile, treating you like the queen you are, and proving to you that you are the absolute best thing that ever happened to me. I am so lucky you are mine.
+            </p>
+        </div>
+    </div>
+
+
+    <div id="screen-obsession" class="screen hidden">
+        <button class="back-btn" onclick="showScreen('screen-menu')">← Go Back</button>
+        <div class="romantic-card">
+            <h2 style="font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--bg-deep-red); margin-top: 0;">Growing Day by Day</h2>
+            <p class="letter-text">They say obsession is a strong word, but what else do you call it when my heart skips a beat just seeing your name light up my phone?</p>
+            <p class="letter-text">Daily, my love for you just multiplies. You are the most beautiful soul, my Bangaram. I promise to never take you for granted, to wake up every day choosing you, and to love you harder every single tomorrow.</p>
+            <p style="font-size: 2rem; margin-top: 20px;">✨ 💖 ✨</p>
+        </div>
+    </div>
+
+
     <script>
-        // --- Effect 1: The Endless Love Counter ---
-        let loveValue = 100;
-        const counterElement = document.getElementById('loveCounter');
+        const emojis = ['❤️', '💖', '🌸', '🌹', '✨', '💕', '🌺', '👑'];
         
-        // This makes the number go up rapidly like a crazy meter
-        setInterval(() => {
-            loveValue += Math.floor(Math.random() * 50);
-            counterElement.innerText = loveValue.toLocaleString() + '%';
-        }, 150);
-
-
-        // --- Effect 2: The Tricky "No" Button ---
-        const noBtn = document.getElementById('noBtn');
-        const funnyResponses = [
-            "Nice try!", "Too slow!", "Not an option!", 
-            "Click YES instead!", "I'm invincible!", "You still love me!"
-        ];
-        
-        // When her mouse gets close, the button runs away
-        noBtn.addEventListener('mouseover', () => {
-            const x = Math.random() * (window.innerWidth - 150) - (window.innerWidth / 2) + 75;
-            const y = Math.random() * 100 - 50; 
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
             
-            noBtn.style.transform = `translate(${x}px, ${y}px)`;
-            noBtn.innerText = funnyResponses[Math.floor(Math.random() * funnyResponses.length)];
-        });
-
-
-        // --- Effect 3: The Celebration (When she clicks YES) ---
-        function celebrate() {
-            // Change the text to something sweet
-            document.getElementById('mainCard').innerHTML = `
-                <h1 style="font-size: 3rem; animation: pulse 1s infinite;">YAY! 🎉</h1>
-                <p style="font-size: 1.5rem;">You are the absolute best.</p>
-                <p>I promise to keep growing my obsession with you every single day. I love you!</p>
-            `;
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            const duration = Math.random() * 5 + 5; 
+            particle.style.animationDuration = duration + 's';
             
-            // Trigger a massive explosion of hearts and stars
-            for(let i = 0; i < 100; i++) {
-                setTimeout(createFloatingItem, i * 30);
+            document.body.appendChild(particle);
+            
+            setTimeout(() => particle.remove(), duration * 1000);
+        }
+
+        setInterval(createParticle, 300);
+
+        const CORRECT_PIN = "2602";
+        let enteredPin = "";
+        const pinDots = document.querySelectorAll('.pin-dot');
+
+        function pressKey(num) {
+            if (enteredPin.length < 4) {
+                enteredPin += num;
+                updateDots();
+            }
+
+            if (enteredPin.length === 4) {
+                setTimeout(checkPin, 300); 
             }
         }
 
-
-        // --- Effect 4: Background Floating Items ---
-        const emojis = ['❤️', '✨', '🌸', '💖', '🥰', '🦋'];
-        
-        function createFloatingItem() {
-            const item = document.createElement('div');
-            item.classList.add('floating-item');
-            item.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            
-            item.style.left = Math.random() * 100 + 'vw';
-            item.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            item.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            
-            document.body.appendChild(item);
-            
-            setTimeout(() => item.remove(), 5000);
+        function updateDots() {
+            pinDots.forEach((dot, index) => {
+                if (index < enteredPin.length) {
+                    dot.classList.add('filled');
+                } else {
+                    dot.classList.remove('filled');
+                }
+            });
         }
 
-        // Keep a steady flow of items floating in the background
-        setInterval(createFloatingItem, 800);
+        function checkPin() {
+            if (enteredPin === CORRECT_PIN) {
+                showScreen('screen-menu');
+            } else {
+                enteredPin = "";
+                updateDots();
+                const display = document.getElementById('pinDisplay');
+                display.style.transform = "translateX(-10px)";
+                setTimeout(() => display.style.transform = "translateX(10px)", 50);
+                setTimeout(() => display.style.transform = "translateX(-10px)", 100);
+                setTimeout(() => display.style.transform = "translateX(0)", 150);
+            }
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+        }
     </script>
 </body>
 </html>
