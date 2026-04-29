@@ -90,7 +90,7 @@
         
         .step.active .reveal-1 { animation: fadeInText 1s forwards 0.5s; }
         .step.active .reveal-2 { animation: fadeInText 1s forwards 2.5s; }
-        .step.active .reveal-3 { animation: fadeInText 1s forwards 4.5s; } /* Forces user to wait 4.5s before button appears */
+        .step.active .reveal-3 { animation: fadeInText 1s forwards 4.5s; } 
 
         @keyframes fadeInText {
             to { opacity: 1; transform: translateY(0); }
@@ -147,20 +147,19 @@
             position: absolute;
         }
 
-        /* Interactive Heart Hold Button */
-        .hold-container {
+        /* Interactive Tap Button */
+        .tap-container {
             margin: 30px auto;
             position: relative;
             width: 120px;
             height: 120px;
         }
 
-        .hold-btn {
+        .tap-btn {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             background: white;
-            border: 4px solid #ff4b82;
             font-size: 50px;
             display: flex;
             justify-content: center;
@@ -170,22 +169,23 @@
             transition: transform 0.1s;
             user-select: none;
             -webkit-user-select: none;
+            position: relative;
+            z-index: 2;
         }
 
-        .hold-btn:active {
-            transform: scale(0.9);
+        .tap-btn:active {
+            transform: scale(0.85); /* Satisfying punch effect when clicked */
         }
 
+        /* The progress ring that fills up */
         .progress-ring {
             position: absolute;
-            top: -10px; left: -10px;
-            width: 140px; height: 140px;
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
             border-radius: 50%;
-            border: 8px solid transparent;
-            border-top-color: #ff4b82;
-            border-right-color: #ff4b82;
+            background: conic-gradient(#ff4b82 0%, transparent 0%);
             opacity: 0;
-            transform: rotate(-45deg);
+            z-index: 1;
+            transition: opacity 0.3s ease;
         }
 
         /* Letter Styling */
@@ -249,11 +249,11 @@
         </div>
 
         <div id="step3" class="step">
-            <h1 class="reveal-1">Pelli cheskundam ledha kalesi undam Fast ga ,Prove you still care a little...</h1>
-            <p class="reveal-2">Press and hold the heart until it fills up to unlock me .</p>
-            <div class="hold-container reveal-3">
+            <h1 class="reveal-1">Pelli cheskundam ledha kalesi undam Fast ga ,Prove you still care a little..</h1>
+            <p class="reveal-2">Tap the heart 10 times to fill it up and unlock my message.</p>
+            <div class="tap-container reveal-3">
                 <div class="progress-ring" id="progress-ring"></div>
-                <div class="hold-btn" id="hold-btn">❤️</div>
+                <div class="tap-btn" id="tap-btn">❤️</div>
             </div>
         </div>
 
@@ -277,7 +277,7 @@
         </div>
 
         <div id="step6" class="step">
-            <h1 class="reveal-1">The Thing is 📝</h1>
+            <h1 class="reveal-1">THE THING IS📝</h1>
             <div class="letter-box reveal-2">
                 <p>Ninna nenu nuvu lag chestav anave aa msg appude intlo chepesi start aya neku matram hmm ane ananu ne reaction chudala ane ,I am glad you reacted as I expected naku aa reaction estavo led ane chusa late replies kuda voice note pedadham anukuna but neku telustadhe ane nenu chat ee chesa ,messages ane nenu em care cheyanatlu echa i am sorry but deep down nenu ne reactions kosam chesa but neku telusuntadhe anukuna.</p>
                 <p>Nenu mamulgane vastha anta but neku food eyala ane daneke ralena ane nuvu vurike antunadu ane telusuntadhe anukuna but neku kopam vasthandhi Anav nenu fst ga vache teskuna ane chepina kastha cool avuthav ane but nuvve kanipetesav yaduna ane but adhe nake nachaledhu enduku dantlo ragebait cheseke chusa ane nuvu chana feel ayuntav emo.</p>
@@ -292,7 +292,7 @@
         <div id="step7" class="step">
             <h1 class="reveal-1">Waiting for you... ⏳✨</h1>
             <p class="reveal-2">I'm going straight to Instagram right now to wait for your follow and your message.</p>
-            <p class="reveal-3" style="font-size: 22px; font-weight: 500; color: #d10056;">I love,I love,I love you! , ❤️</p>
+            <p class="reveal-3" style="font-size: 22px; font-weight: 500; color: #d10056;">I love you, My Love! ❤️</p>
         </div>
 
     </div>
@@ -335,45 +335,38 @@
             }, 600); // Wait for fade out
         }
 
-        // --- Interactive Hold Button Logic ---
-        const holdBtn = document.getElementById('hold-btn');
+        // --- Interactive Tap Button Logic ---
+        const tapBtn = document.getElementById('tap-btn');
         const progressRing = document.getElementById('progress-ring');
-        let holdTimer;
-        let progress = 0;
-        let holdInterval;
+        let clickCount = 0;
+        const totalClicks = 10;
 
-        const startHold = () => {
-            progressRing.style.opacity = '1';
-            progressRing.style.transition = 'transform 0.1s linear';
+        tapBtn.addEventListener('click', () => {
+            if (clickCount >= totalClicks) return; // Prevent extra clicks
+
+            clickCount++;
             
-            holdInterval = setInterval(() => {
-                progress += 5; // Increases progress
-                progressRing.style.transform = `rotate(${-45 + progress}deg)`;
-                
-                if (progress >= 360) {
-                    clearInterval(holdInterval);
-                    holdBtn.innerHTML = "🔓";
-                    setTimeout(() => nextStep(4), 500);
-                }
-            }, 30); // ~2.5 seconds to complete
-        };
-
-        const stopHold = () => {
-            clearInterval(holdInterval);
-            if (progress < 360) {
-                progress = 0;
-                progressRing.style.transform = 'rotate(-45deg)';
-                progressRing.style.opacity = '0';
+            // Show the ring on the first click
+            if (clickCount === 1) {
+                progressRing.style.opacity = '1';
             }
-        };
+            
+            // Calculate percentage and update the conic gradient to "fill" the circle
+            let fillPercentage = (clickCount / totalClicks) * 100;
+            progressRing.style.background = `conic-gradient(#ff4b82 ${fillPercentage}%, transparent ${fillPercentage}%)`;
+            
+            // Add a slight jiggle animation to the heart emoji for feedback
+            tapBtn.style.transform = 'scale(0.85)';
+            setTimeout(() => {
+                tapBtn.style.transform = 'scale(1)';
+            }, 100);
 
-        holdBtn.addEventListener('mousedown', startHold);
-        holdBtn.addEventListener('mouseup', stopHold);
-        holdBtn.addEventListener('mouseleave', stopHold);
-        
-        // Touch support for mobile
-        holdBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startHold(); });
-        holdBtn.addEventListener('touchend', stopHold);
+            // Once fully tapped, move to the next screen
+            if (clickCount === totalClicks) {
+                tapBtn.innerHTML = "🔓";
+                setTimeout(() => nextStep(4), 800); // Wait just a moment so she sees it unlocked
+            }
+        });
 
         // --- Trick "No" Button Logic ---
         const noBtn = document.getElementById('noBtn');
