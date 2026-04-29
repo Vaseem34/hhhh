@@ -3,407 +3,399 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Pellam</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fredoka:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
-    
+    <title>For My Love ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-deep-red: #d90429;
-            --bg-soft-red: #ef233c;
-            --text-light: #ffffff;
-            --gold: #ffd700;
-        }
-
-        body, html {
+        * {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--bg-deep-red), var(--bg-soft-red), #ff4d6d);
-            background-size: 200% 200%;
-            animation: gradientShift 10s ease infinite;
-            font-family: 'Fredoka', sans-serif;
-            color: var(--text-light);
-            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
-        @keyframes gradientShift {
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #ffb6c1 0%, #ffc0cb 50%, #fecfef 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #4a4a4a;
+        }
+
+        @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Utility Classes */
-        .hidden { display: none !important; }
-        .screen {
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 1s ease-in-out;
-            padding: 20px;
-            box-sizing: border-box;
-            position: relative;
-            z-index: 10;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- BACKGROUND PARTICLES --- */
-        .particle {
-            position: fixed;
-            bottom: -50px;
+        /* Floating Background Elements */
+        .floating-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
-            z-index: 1;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));
-            animation: floatUp linear forwards;
+            z-index: 0;
+        }
+
+        .float-item {
+            position: absolute;
+            bottom: -10%;
+            opacity: 0;
+            animation: floatUp linear infinite;
+            font-size: 24px;
+            color: white;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
         }
 
         @keyframes floatUp {
-            from { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            to { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
         }
 
-        /* --- SCREEN 1: LOGIN --- */
-        .login-container {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
+        /* Glassmorphism Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 550px;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            padding: 45px 35px;
             border-radius: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 50px rgba(255, 105, 180, 0.15);
+            text-align: center;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .login-title {
-            font-family: 'Great Vibes', cursive;
-            font-size: 4.5rem;
-            margin: 0 0 20px 0;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            animation: pulseText 2s infinite;
+        .step.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
 
-        @keyframes pulseText {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        /* Staggered Reveal Animations to slow down the pacing */
+        .reveal-1, .reveal-2, .reveal-3 { opacity: 0; transform: translateY(15px); }
+        
+        .step.active .reveal-1 { animation: fadeInText 1s forwards 0.5s; }
+        .step.active .reveal-2 { animation: fadeInText 1s forwards 2.5s; }
+        .step.active .reveal-3 { animation: fadeInText 1s forwards 4.5s; } /* Forces user to wait 4.5s before button appears */
+
+        @keyframes fadeInText {
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .keypad-section { text-align: center; }
-        .pin-display {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #d10056;
+            font-size: 34px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: 19px;
+            line-height: 1.6;
             margin-bottom: 30px;
-        }
-        .pin-dot {
-            width: 25px;
-            height: 25px;
-            border: 2px solid white;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(255,255,255,0.3);
-            transition: all 0.3s;
-        }
-        .pin-dot.filled {
-            background-color: white;
-            transform: scale(1.2);
-            box-shadow: 0 0 15px white;
-        }
-        .keypad {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-        .key-btn {
-            background: rgba(255,255,255,0.05);
-            border: 2px solid rgba(255,255,255,0.5);
-            color: white;
-            font-size: 1.8rem;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'Fredoka', sans-serif;
-        }
-        .key-btn:hover, .key-btn:active {
-            background: white;
-            color: var(--bg-deep-red);
-            transform: scale(1.1);
+            color: #444;
+            font-weight: 400;
         }
 
-        /* --- SCREEN 2: MAIN MENU --- */
-        .menu-grid {
+        .btn-group {
             display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
             justify-content: center;
+            gap: 15px;
+            position: relative;
+            min-height: 60px;
             margin-top: 20px;
         }
-        .menu-item {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 20px;
-            padding: 30px 40px;
+
+        button {
+            background: linear-gradient(135deg, #ff4b82 0%, #ff7eb3 100%);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            font-size: 18px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 75, 130, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 75, 130, 0.6);
+        }
+
+        .btn-no {
+            background: rgba(255, 255, 255, 0.9);
+            color: #ff4b82;
+            border: 2px solid #ff4b82;
+            position: absolute;
+        }
+
+        /* Interactive Heart Hold Button */
+        .hold-container {
+            margin: 30px auto;
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .hold-btn {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid #ff4b82;
+            font-size: 50px;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: all 0.3s;
-            min-width: 200px;
-        }
-        .menu-item:hover {
-            transform: translateY(-10px);
-            background: rgba(255,255,255,0.25);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
-        .menu-icon {
-            font-size: 4rem;
-            margin-bottom: 15px;
-        }
-        .menu-item h2 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.2rem;
-            margin: 0;
-            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(255, 75, 130, 0.2);
+            transition: transform 0.1s;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
-        /* --- SUB-SCREENS --- */
-        .back-btn {
+        .hold-btn:active {
+            transform: scale(0.9);
+        }
+
+        .progress-ring {
             position: absolute;
-            top: 30px;
-            left: 30px;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(5px);
-            border: 1px solid white;
-            color: white;
-            padding: 10px 25px;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .back-btn:hover {
-            background: white;
-            color: var(--bg-deep-red);
+            top: -10px; left: -10px;
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            border: 8px solid transparent;
+            border-top-color: #ff4b82;
+            border-right-color: #ff4b82;
+            opacity: 0;
+            transform: rotate(-45deg);
         }
 
-        .romantic-card {
-            background: rgba(255, 255, 255, 0.95);
-            color: #590d22;
-            padding: 50px;
-            max-width: 650px;
+        /* Letter Styling */
+        .letter-box {
+            background: rgba(255, 255, 255, 0.75);
+            padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-            text-align: center;
-            position: relative;
+            text-align: left;
+            margin-bottom: 25px;
+            border-left: 6px solid #ff4b82;
+            max-height: 45vh;
+            overflow-y: auto;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
         }
 
-        .pellam-title {
-            font-family: 'Great Vibes', cursive;
-            font-size: 5rem;
-            color: var(--bg-deep-red);
-            margin: 0;
-            line-height: 1;
-        }
-        .pellam-subtitle {
-            font-family: 'Fredoka', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: #ff8fa3;
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-            display: block;
+        .letter-box p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #2b2b2b;
+            line-height: 1.8;
         }
 
-        .letter-text {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.1rem;
-            line-height: 1.5;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .highlight-gold {
-            color: #d4af37;
+        .signature {
+            margin-top: 25px;
+            text-align: right;
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: #d10056;
             font-weight: bold;
+            font-style: italic;
         }
+
+        .letter-box::-webkit-scrollbar { width: 8px; }
+        .letter-box::-webkit-scrollbar-track { background: rgba(255,255,255,0.5); border-radius: 10px; }
+        .letter-box::-webkit-scrollbar-thumb { background: #ff4b82; border-radius: 10px; }
+
     </style>
 </head>
 <body>
 
-    <div id="screen-login" class="screen">
-        <div class="login-container">
-            <div style="text-align: center;">
-                <h1 class="login-title">For You<br>Only</h1>
-                <p style="font-size: 1.2rem; opacity: 0.9;">Please unlock my heart...</p>
-            </div>
+    <div class="floating-bg" id="floating-container"></div>
 
-            <div class="keypad-section">
-                <div class="pin-display" id="pinDisplay">
-                    <div class="pin-dot"></div>
-                    <div class="pin-dot"></div>
-                    <div class="pin-dot"></div>
-                    <div class="pin-dot"></div>
-                </div>
-                <div class="keypad">
-                    <button class="key-btn" onclick="pressKey(1)">1</button>
-                    <button class="key-btn" onclick="pressKey(2)">2</button>
-                    <button class="key-btn" onclick="pressKey(3)">3</button>
-                    <button class="key-btn" onclick="pressKey(4)">4</button>
-                    <button class="key-btn" onclick="pressKey(5)">5</button>
-                    <button class="key-btn" onclick="pressKey(6)">6</button>
-                    <button class="key-btn" onclick="pressKey(7)">7</button>
-                    <button class="key-btn" onclick="pressKey(8)">8</button>
-                    <button class="key-btn" onclick="pressKey(9)">9</button>
-                    <button class="key-btn" style="grid-column: 2;" onclick="pressKey(0)">0</button>
-                </div>
-                <p style="margin-top: 25px; font-size: 1rem; opacity: 0.8; letter-spacing: 1px;">Hint: the day we met on insta</p>
-            </div>
-        </div>
-    </div>
-
-
-    <div id="screen-menu" class="screen hidden">
-        <h1 style="font-family: 'Great Vibes', cursive; font-size: 4rem; margin-bottom: 10px;">My Heart Belongs to You</h1>
-        <p style="font-size: 1.2rem; margin-bottom: 40px; letter-spacing: 2px; text-transform: uppercase;">Choose a message</p>
+    <div class="container">
         
-        <div class="menu-grid">
-            <div class="menu-item" onclick="showScreen('screen-letter')">
-                <div class="menu-icon">💌</div>
-                <h2>My Apology</h2>
-            </div>
-            <div class="menu-item" onclick="showScreen('screen-pellam')">
-                <div class="menu-icon">👑</div>
-                <h2>My Pellam</h2>
-            </div>
-            <div class="menu-item" onclick="showScreen('screen-obsession')">
-                <div class="menu-icon">💖</div>
-                <h2>My Promise</h2>
+        <div id="step1" class="step active">
+            <h1 class="reveal-1">Hey My Love... ✨</h1>
+            <p class="reveal-2">Ninna nenu chesindhe fuuny ga care cheyanatlu chana hurt ga undhe nakee .<br>Ala funny ga ika cheyanu PROMISE.</p>
+            <p class="reveal-3">But I made this just for you, so please stay for a minute.</p>
+            <div class="btn-group reveal-3">
+                <button onclick="nextStep(2)">I'm listening 🤍</button>
             </div>
         </div>
-    </div>
 
-
-    <div id="screen-letter" class="screen hidden">
-        <button class="back-btn" onclick="showScreen('screen-menu')">← Go Back</button>
-        <div class="romantic-card">
-            <h2 style="font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--bg-deep-red); margin-top: 0;">My Sweet Bangaram,</h2>
-            <p class="letter-text">I am so, so sorry.</p>
-            <p class="letter-text">I know I messed up today, especially for not saying "I love you" first. That should always be the very first thing you hear from me, because it's the truest thing in my heart.</p>
-            <p class="letter-text">You are my entire world, the beat of my heart, and the reason I smile every single day. I can't stand the thought of you being upset with me.</p>
-            <p class="letter-text" style="margin-top: 30px; font-weight: bold; color: var(--bg-soft-red);">Please forgive this idiot who loves you endlessly.</p>
+        <div id="step2" class="step">
+            <h1 class="reveal-1">I miss you every Planck sec . 🥺</h1>
+            <p class="reveal-2">Ne presence one day lekapoyna naa day start kanatlu untadhe .</p>
+            <p class="reveal-3">You are my favorite person top on everyone,em jarigina nathone undu dont leave me naku ninnu one day loose avadame alochistene digest kavatledhu .</p>
+            <div class="btn-group reveal-3">
+                <button onclick="nextStep(3)">Next 🌸</button>
+            </div>
         </div>
-    </div>
 
-
-    <div id="screen-pellam" class="screen hidden">
-        <button class="back-btn" onclick="showScreen('screen-menu')">← Go Back</button>
-        <div class="romantic-card" style="background: #fff0f3; border: 2px solid #ffb3c6;">
-            <span class="pellam-subtitle">To the queen of my heart</span>
-            <h1 class="pellam-title">My Pellam</h1>
-            <div style="font-size: 3rem; margin: 20px 0;">🌸 👑 🌸</div>
-            <p class="letter-text" style="font-size: 2.2rem;">You are not just my love,<br>you are my <span class="highlight-gold">Bangaram</span>, my everything.</p>
-            <p style="font-family: 'Fredoka', sans-serif; font-size: 1.15rem; color: #555; line-height: 1.6; margin-top: 20px;">
-                Hearing your name, calling you mine... it is the greatest privilege of my life. 
-                I want to spend every single day making you smile, treating you like the queen you are, and proving to you that you are the absolute best thing that ever happened to me. I am so lucky you are mine.
-            </p>
+        <div id="step3" class="step">
+            <h1 class="reveal-1">Pelli cheskundam ledha kalesi undam Fast ga ,Prove you still care a little...</h1>
+            <p class="reveal-2">Press and hold the heart until it fills up to unlock me .</p>
+            <div class="hold-container reveal-3">
+                <div class="progress-ring" id="progress-ring"></div>
+                <div class="hold-btn" id="hold-btn">❤️</div>
+            </div>
         </div>
-    </div>
 
-
-    <div id="screen-obsession" class="screen hidden">
-        <button class="back-btn" onclick="showScreen('screen-menu')">← Go Back</button>
-        <div class="romantic-card">
-            <h2 style="font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--bg-deep-red); margin-top: 0;">Growing Day by Day</h2>
-            <p class="letter-text">They say obsession is a strong word, but what else do you call it when my heart skips a beat just seeing your name light up my phone?</p>
-            <p class="letter-text">Daily, my love for you just multiplies. You are the most beautiful soul, my Bangaram. I promise to never take you for granted, to wake up every day choosing you, and to love you harder every single tomorrow.</p>
-            <p style="font-size: 2rem; margin-top: 20px;">✨ 💖 ✨</p>
+        <div id="step4" class="step">
+            <h1 class="reveal-1">So... about Instagram 🫣</h1>
+            <p class="reveal-2">Can you please unblock me now?</p>
+            <p class="reveal-2" style="font-size: 15px; color: #666;">(My feed is literally useless without you sending me reels)</p>
+            <div class="btn-group reveal-3" style="justify-content: flex-start; padding-left: 20px;">
+                <button onclick="nextStep(5)">Okay, fine I will 🙄</button>
+                <button class="btn-no" id="noBtn" onmouseover="moveButton()" onclick="moveButton()">Never 😤</button>
+            </div>
         </div>
-    </div>
 
+        <div id="step5" class="step">
+            <h1 class="reveal-1">Thank you, My Love! 🎉</h1>
+            <p class="reveal-2">But wait... before you go check your phone...</p>
+            <p class="reveal-3">I need to confess something to you about yesterday. Please read it carefully.</p>
+            <div class="btn-group reveal-3">
+                <button onclick="nextStep(6)">Open Letter 💌</button>
+            </div>
+        </div>
+
+        <div id="step6" class="step">
+            <h1 class="reveal-1">The Thing is 📝</h1>
+            <div class="letter-box reveal-2">
+                <p>Ninna nenu nuvu lag chestav anave aa msg appude intlo chepesi start aya neku matram hmm ane ananu ne reaction chudala ane ,I am glad you reacted as I expected naku aa reaction estavo led ane chusa late replies kuda voice note pedadham anukuna but neku telustadhe ane nenu chat ee chesa ,messages ane nenu em care cheyanatlu echa i am sorry but deep down nenu ne reactions kosam chesa but neku telusuntadhe anukuna.</p>
+                <p>Nenu mamulgane vastha anta but neku food eyala ane daneke ralena ane nuvu vurike antunadu ane telusuntadhe anukuna but neku kopam vasthandhi Anav nenu fst ga vache teskuna ane chepina kastha cool avuthav ane but nuvve kanipetesav yaduna ane but adhe nake nachaledhu enduku dantlo ragebait cheseke chusa ane nuvu chana feel ayuntav emo.</p>
+                <p>I am totally sorry ninna nyt nunchi daneke off lo vunav anukuntuna but dantlo antha inka eppudu ala adukonu i promise.</p>
+                <div class="signature">- Vaseem</div>
+            </div>
+            <div class="btn-group reveal-3">
+                <button onclick="nextStep(7)">I forgive you ❤️</button>
+            </div>
+        </div>
+
+        <div id="step7" class="step">
+            <h1 class="reveal-1">Waiting for you... ⏳✨</h1>
+            <p class="reveal-2">I'm going straight to Instagram right now to wait for your follow and your message.</p>
+            <p class="reveal-3" style="font-size: 22px; font-weight: 500; color: #d10056;">I love,I love,I love you! , ❤️</p>
+        </div>
+
+    </div>
 
     <script>
-        const emojis = ['❤️', '💖', '🌸', '🌹', '✨', '💕', '🌺', '👑'];
-        
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-            
-            particle.style.left = Math.random() * 100 + 'vw';
-            particle.style.fontSize = (Math.random() * 20 + 20) + 'px';
-            const duration = Math.random() * 5 + 5; 
-            particle.style.animationDuration = duration + 's';
-            
-            document.body.appendChild(particle);
-            
-            setTimeout(() => particle.remove(), duration * 1000);
+        // Generate floating background items
+        const floatingContainer = document.getElementById('floating-container');
+        const items = ['✨', '🌸', '🤍', '💖', '🦋'];
+        for(let i = 0; i < 25; i++) {
+            let item = document.createElement('div');
+            item.className = 'float-item';
+            item.innerText = items[Math.floor(Math.random() * items.length)];
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = (Math.random() * 8 + 10) + 's';
+            item.style.animationDelay = Math.random() * 5 + 's';
+            floatingContainer.appendChild(item);
         }
 
-        setInterval(createParticle, 300);
-
-        const CORRECT_PIN = "2602";
-        let enteredPin = "";
-        const pinDots = document.querySelectorAll('.pin-dot');
-
-        function pressKey(num) {
-            if (enteredPin.length < 4) {
-                enteredPin += num;
-                updateDots();
-            }
-
-            if (enteredPin.length === 4) {
-                setTimeout(checkPin, 300); 
-            }
+        // Smooth transition between steps
+        function nextStep(stepNumber) {
+            const currentStep = document.querySelector('.step.active');
+            
+            currentStep.style.opacity = '0';
+            currentStep.style.transform = 'translateY(-20px) scale(0.95)';
+            
+            setTimeout(() => {
+                currentStep.classList.remove('active');
+                
+                const nextStepEl = document.getElementById('step' + stepNumber);
+                nextStepEl.classList.add('active');
+                
+                // Restart CSS animations for the next step
+                const reveals = nextStepEl.querySelectorAll('[class^="reveal-"]');
+                reveals.forEach(el => {
+                    el.style.animation = 'none';
+                    void el.offsetWidth; // Trigger reflow
+                    el.style.animation = null; 
+                });
+                
+            }, 600); // Wait for fade out
         }
 
-        function updateDots() {
-            pinDots.forEach((dot, index) => {
-                if (index < enteredPin.length) {
-                    dot.classList.add('filled');
-                } else {
-                    dot.classList.remove('filled');
+        // --- Interactive Hold Button Logic ---
+        const holdBtn = document.getElementById('hold-btn');
+        const progressRing = document.getElementById('progress-ring');
+        let holdTimer;
+        let progress = 0;
+        let holdInterval;
+
+        const startHold = () => {
+            progressRing.style.opacity = '1';
+            progressRing.style.transition = 'transform 0.1s linear';
+            
+            holdInterval = setInterval(() => {
+                progress += 5; // Increases progress
+                progressRing.style.transform = `rotate(${-45 + progress}deg)`;
+                
+                if (progress >= 360) {
+                    clearInterval(holdInterval);
+                    holdBtn.innerHTML = "🔓";
+                    setTimeout(() => nextStep(4), 500);
                 }
-            });
-        }
+            }, 30); // ~2.5 seconds to complete
+        };
 
-        function checkPin() {
-            if (enteredPin === CORRECT_PIN) {
-                showScreen('screen-menu');
-            } else {
-                enteredPin = "";
-                updateDots();
-                const display = document.getElementById('pinDisplay');
-                display.style.transform = "translateX(-10px)";
-                setTimeout(() => display.style.transform = "translateX(10px)", 50);
-                setTimeout(() => display.style.transform = "translateX(-10px)", 100);
-                setTimeout(() => display.style.transform = "translateX(0)", 150);
+        const stopHold = () => {
+            clearInterval(holdInterval);
+            if (progress < 360) {
+                progress = 0;
+                progressRing.style.transform = 'rotate(-45deg)';
+                progressRing.style.opacity = '0';
             }
-        }
+        };
 
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(screen => {
-                screen.classList.add('hidden');
-            });
-            document.getElementById(screenId).classList.remove('hidden');
+        holdBtn.addEventListener('mousedown', startHold);
+        holdBtn.addEventListener('mouseup', stopHold);
+        holdBtn.addEventListener('mouseleave', stopHold);
+        
+        // Touch support for mobile
+        holdBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startHold(); });
+        holdBtn.addEventListener('touchend', stopHold);
+
+        // --- Trick "No" Button Logic ---
+        const noBtn = document.getElementById('noBtn');
+        
+        setTimeout(() => {
+            noBtn.style.left = '220px'; 
+        }, 100);
+
+        function moveButton() {
+            const container = document.getElementById('step4');
+            const containerRect = container.getBoundingClientRect();
+            
+            const maxX = containerRect.width - noBtn.offsetWidth - 20;
+            const maxY = containerRect.height - noBtn.offsetHeight - 20;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * 80) + 20; 
+
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 120 + 'px'; 
         }
     </script>
+
 </body>
 </html>
